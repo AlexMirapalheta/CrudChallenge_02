@@ -1,7 +1,7 @@
-cityService = require('../service/cityService');
+const cityService = require('../service/cityService');
+
 
 class CityController {
-  constructor() {}
 
   async create(req, res) {
     console.log('[CITY CONTROLLER] Create City Requested');
@@ -16,6 +16,19 @@ class CityController {
       }
     } catch (error) {
       res.status(500).send({ message: 'Internal Problems' });
+    }
+  }
+
+  async getAll(req, res) {
+    try {
+      const query = req.query;
+      const result = await cityService.listAll(query);
+      if (result.length !== 0) {
+        return res.status(204).send();
+      }
+      return res.status(200).send(result);
+    } catch (error) {
+      return res.status(500).json(error); //TODO: trabalho do alex
     }
   }
 

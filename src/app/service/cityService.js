@@ -1,7 +1,14 @@
 cityRepository = require('../repository/cityRepository');
 
 class cityService {
-  constructor() {}
+  async listAll(payload) {
+    try {
+      const result = await cityRepository.listAll(payload);
+      return result;
+    } catch (error) {
+      throw error;
+    }
+  }
 
   async create(name, state) {
     try {
@@ -32,7 +39,9 @@ class cityService {
       console.log('[CITY SERVICE] Searching City By State');
       return await cityRepository.findByState(state);
     } catch (error) {
-      console.log(`[CITY SERVICE] Error on Try Find a Cities By State:\n${error}`);
+      console.log(
+        `[CITY SERVICE] Error on Try Find a Cities By State:\n${error}`
+      );
     }
   }
 
