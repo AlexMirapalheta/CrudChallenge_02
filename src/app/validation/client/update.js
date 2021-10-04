@@ -1,17 +1,11 @@
 const Joi = require('joi');
 
 module.exports = async (req, res, next) => {
-  console.log('[VALIDATION] Create City');
+  console.log('[VALIDATION] Update Client');
   try {
     const schema = Joi.object({
-      _id: Joi.string().alphanum().length(24).trim(),
-      name: Joi.string().trim().min(3).max(30),
-      state: Joi.string()
-        .pattern(/^[A-Z]+$/)
-        .length(2)
-        .required()
-        .trim()
-        .uppercase()
+      _id: Joi.string().alphanum().length(24).trim().required(),
+      fullname: Joi.string().min(2).max(50).trim().required()
     });
 
     const { error } = await schema.validate(req.query, { abortEarly: true });

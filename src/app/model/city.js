@@ -7,7 +7,8 @@ const CitySchema = new mongoose.Schema({
   },
   state: {
     type: String,
-    required: true
+    required: true,
+    uppercase: true
   },
   createAt: {
     type: Date,

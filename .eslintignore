@@ -1,0 +1,6 @@
+__etc__
+__tests__
+coverage
+*.json
+dist
+node_modules

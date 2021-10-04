@@ -1,5 +1,5 @@
 const express = require('express');
-const routes = require('./app/index.routes');
+const routes = require('./app/router/index.routes');
 
 class App {
   constructor() {
@@ -21,4 +21,4 @@ class App {
   }
 }
 
-module.exports = new App().express;
+module.exports = new App().server;

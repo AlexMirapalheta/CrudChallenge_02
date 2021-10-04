@@ -1,17 +1,14 @@
 const Joi = require('joi');
 
 module.exports = async (req, res, next) => {
-  console.log('[VALIDATION] Create City');
+  console.log('[VALIDATION] Read Client');
   try {
     const schema = Joi.object({
       _id: Joi.string().alphanum().length(24).trim(),
-      name: Joi.string().trim().min(3).max(30),
-      state: Joi.string()
-        .pattern(/^[A-Z]+$/)
-        .length(2)
-        .required()
-        .trim()
-        .uppercase()
+      fullname: Joi.string().min(2).max(50).trim(),
+      gender: Joi.string().length(1).uppercase().trim(),
+      birthdate: Joi.date().less('now'),
+      city: Joi.string().alphanum().length(24).trim()
     });
 
     const { error } = await schema.validate(req.query, { abortEarly: true });
@@ -19,7 +16,7 @@ module.exports = async (req, res, next) => {
 
     return next();
   } catch (error) {
-    console.log(`[VALIDATION] City Parameters Dont Validated:\n${error}`);
+    console.log(`[VALIDATION] Client Parameters Dont Validated:\n${error}`);
     return res.status(400).json(error);
   }
 };

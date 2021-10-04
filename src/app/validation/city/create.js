@@ -4,8 +4,7 @@ module.exports = async (req, res, next) => {
   console.log('[VALIDATION] Create City');
   try {
     const schema = Joi.object({
-      _id: Joi.string().alphanum().length(24).trim(),
-      name: Joi.string().trim().min(3).max(30),
+      name: Joi.string().min(3).max(30).required().trim().required,
       state: Joi.string()
         .pattern(/^[A-Z]+$/)
         .length(2)
@@ -19,7 +18,7 @@ module.exports = async (req, res, next) => {
 
     return next();
   } catch (error) {
-    console.log(`[VALIDATION] City Parameters Dont Validated:\n${error}`);
+    console.log(`[VALIDATION] Invalid Parameters To Create a New Record`);
     return res.status(400).json(error);
   }
 };

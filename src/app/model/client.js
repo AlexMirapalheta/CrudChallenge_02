@@ -1,8 +1,9 @@
 const mongoose = require('../../database/connection');
 
 const ClientSchema = new mongoose.Schema({
-  fullName: {
+  fullname: {
     type: String,
+    unique: true,
     required: true
   },
   gender: {
@@ -18,7 +19,7 @@ const ClientSchema = new mongoose.Schema({
     type: Number,
     required: true
   },
-  cityWhereLive: {
+  city: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'City',
     required: true

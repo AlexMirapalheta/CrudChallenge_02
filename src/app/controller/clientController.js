@@ -1,29 +1,63 @@
-class ClientController {
-  constructor() {
-    this.clientService = require('../service/clienteService');
-  }
+const { query } = require('express');
+const clientService = require('../service/clienteService');
 
+class ClientController {
   async cretate(req, res) {
-    console.log('[CLIENT CONTROLLER] Create Client Requested');
+    console.log('[CLIENT CONTROLLER] Create');
     try {
-      const client = req.body;
-      if (this.clientService.create(client)) {
-        res.status(200).send({ message: 'Client Created Successifuly' });
+      const query = req.query;
+      const result = await clientService.create(query);
+      if (result) {
+        res.status(200).json({ message: 'Client Created Successifuly' });
       } else {
-        res.status(400).send({ message: 'Client Already Exist' });
+        res.status(400).json({ message: 'Client Already Exist' });
       }
     } catch (error) {
-      res.status(500).send({ message: 'Internal Problems' });
+      console.log(`[CLIENT CONTROLLER] Create Client Error:\n${error}`);
+      res.status(500).json({ message: 'Internal Problems' });
     }
   }
 
-  async findByName(name) {}
+  async getAll(req, res) {
+    console.log('[CLIENT CONTROLLER] getAll');
+    try {
+      const query = req.query;
+      const result = await clientService.getAll(query);
+      if (result.length === 0) {
+        return res.status(204).send({ message: 'No Clients Found' });
+      }
+      return res.status(200).json(result);
+    } catch (error) {
+      console.log(`[CLIENT CONTROLLER] Server Error:\n${error}`);
+      return res.status(500).json({ message: 'Internal Server Error' });
+    }
+  }
 
-  async findById(id) {}
+  async update(req, res) {
+    console.log('[CLIENT CONTROLLER] Update');
+    try {
+      const query = req.query;
+      const result = await clientService.update(query);
+      if (result) return res.status(200).json({ message: 'Client Updated Successfully' });
+      return res.status(204).json({ message: 'No Client Found' });
+    } catch (error) {
+      console.log(`[CLIENT CONTROLLER] Server Error:\n${error}`);
+      return res.status(500).json({ message: 'Internal Server Error' });
+    }
+  }
 
-  async updateName(id, name) {}
-
-  async delete(id) {}
+  async delete(req, res) {
+    console.log('[CLIENT CONTROLLER] Delete');
+    try {
+      const query = req.query;
+      const result = await clientService.delete(query);
+      if (result) return res.status(200).json({ message: 'Client Delete Successfully' });
+      return res.status(404).json({ message: 'No Client Found' });
+    } catch (error) {
+      console.log(`[CLIENT CONTROLLER] Server Error:\n${error}`);
+      return res.status(500).json({ message: 'Internal Server Error' });
+    }
+  }
 }
 
 module.exports = new ClientController();
