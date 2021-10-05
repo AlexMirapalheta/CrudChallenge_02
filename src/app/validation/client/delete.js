@@ -1,7 +1,6 @@
 const Joi = require('joi');
 
 module.exports = async (req, res, next) => {
-  console.log('[VALIDATION] Create City');
   try {
     const schema = Joi.object({
       _id: Joi.string().alphanum().length(24).trim().required()

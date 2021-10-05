@@ -2,12 +2,10 @@ const clientRepository = require('../repository/clientRepository');
 
 class ClientService {
   async create(payload) {
-    console.log('[CLIENT SERVICE] Create');
     try {
       const result = await clientRepository.getAll(payload);
-      if (result.length !== 0) return false;
-      await clientRepository.create(payload);
-      return true;
+      if (result.length === 0) return await clientRepository.create(payload);
+      return false;
     } catch (error) {
       console.log(`[CLIENT SERVICE] Create Error:\n${error}`);
       throw error;
@@ -15,7 +13,6 @@ class ClientService {
   }
 
   async getAll(payload) {
-    console.log('[CLIENT SERVICE] getAll');
     try {
       const result = await clientRepository.getAll(payload);
       return result;
@@ -26,10 +23,9 @@ class ClientService {
   }
 
   async update(payload) {
-    console.log('[CLIENT SERVICE] Update');
     try {
       const result = await clientRepository.update(payload);
-      if (result !== null) return true;
+      if (result !== null) return result;
       return false;
     } catch (error) {
       console.log(`[CLIENT SERVICE] Update Error:\n${error}`);
@@ -37,10 +33,9 @@ class ClientService {
     }
   }
   async delete(payload) {
-    console.log('[CLIENT SERVICE] Delete');
     try {
       const result = await clientRepository.delete(payload);
-      if (result !== null) return true;
+      if (result !== null) return result;
       return false;
     } catch (error) {
       console.log(`[CLIENT SERVICE] Delete Error:\n${error}`);

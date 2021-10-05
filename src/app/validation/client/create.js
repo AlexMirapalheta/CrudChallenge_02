@@ -1,10 +1,14 @@
 const Joi = require('joi');
 
 module.exports = async (req, res, next) => {
-  console.log('[VALIDATION] Create Client');
   try {
     const schema = Joi.object({
-      fullname: Joi.string().min(2).max(50).trim().required(),
+      fullname: Joi.string()
+        .pattern(/^[^0-9]+$/)
+        .min(5)
+        .max(50)
+        .trim()
+        .required(),
       gender: Joi.string()
         .length(1)
         .pattern(/^[MFO]$/)
@@ -21,6 +25,6 @@ module.exports = async (req, res, next) => {
     return next();
   } catch (error) {
     console.log(`[VALIDATION] Invalid Parameters To Create a New Record\n${error}`);
-    return res.status(400).json(error);
+    return res.status(400).json({ message: 'Invalid Parameters To Create a New Client' });
   }
 };
