@@ -1,20 +1,11 @@
 const Joi = require('joi');
+const { onlyLetters, genderCases } = require('../../../helpers/regex');
 
 module.exports = async (req, res, next) => {
   try {
     const schema = Joi.object({
-      fullname: Joi.string()
-        .pattern(/^[^0-9]+$/)
-        .min(5)
-        .max(50)
-        .trim()
-        .required(),
-      gender: Joi.string()
-        .length(1)
-        .pattern(/^[MFO]$/)
-        .uppercase()
-        .trim()
-        .required(),
+      fullname: Joi.string().pattern(onlyLetters).min(5).max(50).trim().required(),
+      gender: Joi.string().length(1).pattern(genderCases).uppercase().trim().required(),
       birthdate: Joi.date().less('now').required(),
       city: Joi.string().alphanum().length(24).trim().required()
     });
@@ -24,7 +15,6 @@ module.exports = async (req, res, next) => {
 
     return next();
   } catch (error) {
-    console.log(`[VALIDATION] Invalid Parameters To Create a New Record\n${error}`);
-    return res.status(400).json({ message: 'Invalid Parameters To Create a New Client' });
+    return res.status(400).json(error);
   }
 };

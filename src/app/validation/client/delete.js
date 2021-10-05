@@ -11,7 +11,6 @@ module.exports = async (req, res, next) => {
 
     return next();
   } catch (error) {
-    console.log(`[VALIDATION] City Parameters Dont Validated:\n${error}`);
     return res.status(400).json(error);
   }
 };

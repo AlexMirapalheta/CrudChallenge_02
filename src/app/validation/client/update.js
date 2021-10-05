@@ -1,19 +1,12 @@
 const Joi = require('joi');
+const { onlyLetters, genderCases } = require('../../../helpers/regex');
 
 module.exports = async (req, res, next) => {
   try {
     const schema = Joi.object({
       _id: Joi.string().alphanum().length(24).trim().required(),
-      fullname: Joi.string()
-        .pattern(/^[^0-9]+$/)
-        .min(2)
-        .max(50)
-        .trim(),
-      gender: Joi.string()
-        .length(1)
-        .pattern(/^[MFO]$/)
-        .uppercase()
-        .trim(),
+      fullname: Joi.string().pattern(onlyLetters).min(2).max(50).trim(),
+      gender: Joi.string().length(1).pattern(genderCases).uppercase().trim(),
       birthdate: Joi.date().less('now'),
       city: Joi.string().alphanum().length(24).trim()
     });
