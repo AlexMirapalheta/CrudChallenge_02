@@ -5,11 +5,14 @@ class ClientController {
     try {
       const query = req.query;
       const result = await clientService.create(query);
-      if (result) res.status(200).json(result);
-      res.status(400).json({ message: 'Client Already Exist' });
+      if (result) {
+        res.status(200).json(result);
+      } else {
+        res.status(403).json({ message: 'Client Already Exist' });
+      }
     } catch (error) {
       console.log(`[CLIENT CONTROLLER] Create Client Error:\n${error}`);
-      res.status(500).json({ message: 'Internal Problems' });
+      res.status(500).json(error);
     }
   }
 

@@ -21,12 +21,13 @@ class CityController {
       const query = req.query;
       const result = await cityService.listAll(query);
       if (result.length === 0) {
-        return res.status(400).json({ message: 'City Not Found' });
+        return res.status(204).json();
+      } else {
+        return res.status(200).json(result);
       }
-      return res.status(200).send(result);
     } catch (error) {
       console.log(`[CITY CONTROLLER] Server Error:\n${error}`);
-      return res.status(500).json({ message: 'Internal Server Error' });
+      return res.status(500).json(error);
     }
   }
 }
