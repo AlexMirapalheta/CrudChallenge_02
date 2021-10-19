@@ -1,24 +1,12 @@
-const cityModel = require('../model/city');
-const clear = require('../../helpers/clear');
+const CitySchema = require('../schema/city');
+const Repository = require('./repository');
 
-class CityRepository {
-  async create(payload) {
-    try {
-      return await cityModel.create(payload);
-    } catch (error) {
-      console.log(`[CITY REPOSIROTY] Error on Try Create City:\n${error}`);
-      throw error;
-    }
+class CityRepository extends Repository {
+  constructor() {
+    super(CitySchema);
   }
-
   async listAll(payload) {
-    try {
-      clear(payload);
-      return await cityModel.find(payload);
-    } catch (error) {
-      console.log(`[CITY REPOSIROTY] Error on Try List All Cities:\n${error}`);
-      throw error;
-    }
+    return super.getAll(payload);
   }
 }
 
