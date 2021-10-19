@@ -1,4 +1,4 @@
-const mongoose = require('../../database/connection');
+const mongoose = require('mongoose');
 
 const CitySchema = new mongoose.Schema({
   name: {

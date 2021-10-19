@@ -1,4 +1,4 @@
-const mongoose = require('../../database/connection');
+const mongoose = require('mongoose');
 const ageHelper = require('../../helpers/age');
 const options = { toJSON: { virtuals: true } };
 

@@ -1,3 +1,6 @@
+require('dotenv').config();
+require('./infra/database/mongo/index');
+
 const express = require('express');
 const routes = require('./app/router/index.routes');
 
